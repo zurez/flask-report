@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html ng-app="ReportApp">
+<head>
+	<title>{{title}}</title>
+	<script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
+
+</head>
+<body ng-controller="ReportController">
+
+<h1>{{user.id}}</h1>
+
+<form role="form" ng-submit="getResults()">
+
+<input type="text" ng-model="input_url" name="url" class="form-control" id="url-box">
+<input type="submit" value="Get Results">
+</form>
+<charts>
+<div id="results">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+    	<select>
+    		<option>Graph</option>
+    		<option>Tabular</option>
+    	</select>
+    </tr>
+      <tr>
+        <th>Key</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% raw %}
+      <tr ng-repeat="(key, val) in result">
+        
+        <td>{{key}}</td>
+        <td>{{val}}</td>
+        
+      </tr>
+    {% endraw %}
+    </tbody>
+  </table>
+</div>
+<p id="vis">
+</p>
+</charts>
+<script type="text/javascript">
+    var w = 300,                        
+    h = 300,                            
+    r = 100,                            
+    color = d3.scale.category20c();     
+    var rdata =  {{result}};
+    data = [{"label":rdata.options.label, "value":rdata.options.responses}, 
+            {"label":"two", "value":50}, 
+            {"label":"three", "value":30}];
+    
+    var vis = d3.select("#vis")
+        .append("svg:svg")              
+        .data([data])                   
+            .attr("width", w)           
+            .attr("height", h)
+        .append("svg:g")                
+            .attr("transform", "translate(" + r + "," + r + ")")  
+    var arc = d3.svg.arc()              
+        .outerRadius(r);
+    var pie = d3.layout.pie()           
+        .value(function(d) { return d.value; });
+    var arcs = vis.selectAll("g.slice")     
+       .data(pie) 
+        .enter() 
+            .append("svg:g")               .attr("class", "slice");  
+        arcs.append("svg:path")
+                .attr("fill", function(d, i) { return color(i); } ) 
+                .attr("d", arc);                                   
+        arcs.append("svg:text")                                     //add a label to each slice
+                .attr("transform", function(d) {                    
+                d.innerRadius = 0;
+                d.outerRadius = r;
+                return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
+            })
+            .attr("text-anchor", "middle")                          //center the text on it's origin
+            .text(function(d, i) { return data[i].label; });       
+        
+    </script>
+</body>
+</html>
