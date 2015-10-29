@@ -1,5 +1,6 @@
 from flask import Flask
 from flask.ext.mongoengine import MongoEngine
+from flask.ext.triangle import Triangle
 
 app = Flask(__name__)
 

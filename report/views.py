@@ -3,6 +3,7 @@ from flask import render_template,jsonify
 from flask import make_response,request
 import requests
 import json
+from flask.ext.triangle import Triangle
 
 @app.errorhandler(404)
 def not_found(error):
@@ -14,7 +15,9 @@ def response_post():
 	keys= data.keys()
 	return data["cid"]
 	return type(data)
-@app.route("/report/<userid>/console")
+
+@app.route("/report/<userid>/console/")
+
 def show_console(userid):
 	# Check if ths user id has access to the perticular console
 	# if yes , redirect to console
@@ -35,7 +38,7 @@ def init(userid,cid):
 	# This part will come from database
 	data={
 	
-	"cid":12,
+	"cid":cid,
 	"total_responses":1300,
 	"options":{
 				"A":{
@@ -73,4 +76,56 @@ def init(userid,cid):
 	}
 	return make_response(jsonify(data))
 	
+@app.route("/test")
+def test():
+	return render_template("test.html")
+@app.route("/api")
+def random_data():
+	import random
+	import json
+	types=["pie","bar"]
+	toss= random.randint(0,1)
+	if toss==0:
+		data={"typ":"pie","values":[{"value":random.randint(200,1200),"color":"#F7464A","highlight":"#FF5A5E","label": "Red"},
+    {
+        "value": random.randint(200,1200),
+        "color": "#46BFBD",
+        "highlight": "#5AD3D1",
+        "label": "Green"
+    },
+    {
+        "value":random.randint(200,1200),
+        "color":"#FDB45C",
+        "highlight": "#FFC870",
+        "label":"Yellow"
+    }
+		]
+		}
+	elif toss==1:
+		aList=["January", "February", "March", "April", "May", "June", "July"]
+		# typ="bar"
+		random.randint(20,100)
+		data={
+		"typ":"bar",
+		"labels":aList ,
+    	"values": [
+        {
+            "label": "My First dataset",
+            "fillColor": "rgba(220,220,220,0.5)",
+            "strokeColor": "rgba(220,220,220,0.8)",
+            "highlightFill": "rgba(220,220,220,0.75)",
+            "highlightStroke": "rgba(220,220,220,1)",
+            "data": [random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100)]
+        },
+        {
+            "label": "My Second dataset",
+            "fillColor": "rgba(151,187,205,0.5)",
+            "strokeColor": "rgba(151,187,205,0.8)",
+            "highlightFill": "rgba(151,187,205,0.75)",
+            "highlightStroke": "rgba(151,187,205,1)",
+            "data": [random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100)]
+        }
+    ]
+		}
 
+	return make_response(jsonify(data))

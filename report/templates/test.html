@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html ng-app="ReportApp">
 <head>
-	<title>{{title}}</title>
-  <!-- Scripts -->
-  <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
+	<title>Test</title>
 	<script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script>
-  
-  <script src="{{ url_for('static', filename='js/ng-infinite-scroll.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
-	
+	<script src="{{ url_for('static', filename='js/ng-infinite-scroll.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
 
 </head>
 <body ng-controller="ReportController">
-
-<h1>{{user.id}}</h1>
 
 <form role="form" ng-submit="getResults()">
 
@@ -39,7 +30,8 @@
         <th>Value</th>
       </tr>
     </thead>
-  	    <tbody>
+
+    <tbody>
     {% raw %}
       <tr ng-repeat="(key, val) in result">
         
@@ -50,22 +42,14 @@
     {% endraw %}
     </tbody>
   </table>
+  <chart></chart>
 </div>
 
 </charts>
-{% raw %}
-<!-- Actual Pagination -->
+<script src="{{ url_for('static', filename='js/ng-app/app.js') }}"></script>
+<!-- Controllers -->
 
-
- <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='1'>
-    
-      <canvas id="polar-area" class="chart chart-polar-area" chart-data="data" chart-labels="labels">
-		</canvas> 
-      <div style='clear: both;'></div>
-    </div>
-    <div ng-show='reddit.busy'>Loading data...</div>
-  </div>
-    {% endraw %}
-
+<script src="{{ url_for('static', filename='js/ng-app/Controllers/ReportController.js') }}"></script>
+<!-- Directives -->
 </body>
 </html>
