@@ -87,7 +87,7 @@ def random_data():
 	toss= random.randint(0,1)
 	if toss==0:
 		data={"typ":"pie","values":[{"value":random.randint(200,1200),"color":"#F7464A","highlight":"#FF5A5E","label": "Red"},
-    {
+    { 
         "value": random.randint(200,1200),
         "color": "#46BFBD",
         "highlight": "#5AD3D1",

@@ -2,34 +2,7 @@
 var myApp = angular.module('ReportApp',['infinite-scroll','chart.js']);
 // Service
 
-// Reddit constructor function to encapsulate HTTP and pagination logic
-myApp.factory('Reddit', function($http) {
-  var Reddit = function() {
-    this.items = [];
-    this.busy = false;
-    this.after = '';
-  };
 
-  Reddit.prototype.nextPage = function() {
-    if (this.busy) return;
-    this.busy = true;
-
-    var url = "http://localhost:5000/api";
-    $http.jsonp(url).success(function(data) {
-    	// The logic to do with the data.
-    	console.log(data);
-      var items = data.data.children;
-      for (var i = 0; i < items.length; i++) {
-        this.items.push(items[i].data);
-      }
-      // this.after = "t3_" + this.items[this.items.length - 1].id;
-      this.busy = false;
-    }.bind(this));
-  };
-
-  return Reddit;
-});
- 
   myApp.controller('ReportController', ['$scope', '$log', '$http', '$timeout',function($scope, $log, $http, $timeout,Reddit) {
     	// Should be a Service , Don't know why it not works :(
           var Reddit = function() {
@@ -45,13 +18,22 @@ myApp.factory('Reddit', function($http) {
             var url = "http://localhost:5000/api";
 
             $http.get(url).success(function(data) {
-            	
+            	var items = data;
+              
             	
                if (data.typ=="bar") {
                	console.log("bar");
+                console.log(data);
+                $scope.testjs= items;
                }
                else if (data.typ=="pie"){
-               	console.log("pie")}; 
+               	console.log("pie");
+                console.log(data);
+                $scope.testjs= items;
+               }; 
+                for (var i = 0; i < items.length; i++) {
+                this.items.push(items[i].data);
+                  }
               this.busy = false;
             }.bind(this));
           };

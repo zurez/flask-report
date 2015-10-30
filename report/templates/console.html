@@ -2,6 +2,8 @@
 <html ng-app="ReportApp">
 <head>
 	<title>{{title}}</title>
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/angular-chart.css')}}">
   <!-- Scripts -->
   <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
@@ -58,7 +60,7 @@
 
 
  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='1'>
-    
+    <something id="testjs"> {{testjs}}</something>
       <canvas id="polar-area" class="chart chart-polar-area" chart-data="data" chart-labels="labels">
 		</canvas> 
       <div style='clear: both;'></div>
