@@ -9,33 +9,44 @@ var myApp = angular.module('ReportApp',['infinite-scroll','chart.js']);
             this.items = [];
             this.busy = false;
             this.after = '';
+            this.counter=0
           };
-
-          Reddit.prototype.nextPage = function() {
+          
+          Reddit.prototype.nextPage = function(contents) {
             if (this.busy) return;
             this.busy = true;
 
             var url = "http://localhost:5000/api";
 
+
             $http.get(url).success(function(data) {
-            	var items = data;
-              
             	
-               if (data.typ=="bar") {
-               	console.log("bar");
-                console.log(data);
-                $scope.testjs= items;
+            	var items= data.data[0];
+            	// alert(data.data[0].typ);
+        			
+               if (data.data[0].typ=="bar") {
+               	this.counter= this.counter+1;
+                $scope.type="PolarArea";
+                $scope.labels = data.data[0].labels;
+  								$scope.data = data.data[0].values;
+
+              
                }
-               else if (data.typ=="pie"){
-               	console.log("pie");
-                console.log(data);
-                $scope.testjs= items;
+               else if (data.data[0].typ=="pie"){this.counter= this.counter+1;
+               					$scope.type="Pie";
+               					$scope.labels = data.data[0].labels;
+  								$scope.data = data.data[0].values;
+
+
+               					
+             	              
+  								            
                }; 
-                for (var i = 0; i < items.length; i++) {
-                this.items.push(items[i].data);
-                  }
+  
+              $scope.number=this.counter;
               this.busy = false;
             }.bind(this));
+            
           };
 
 

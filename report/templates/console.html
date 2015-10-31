@@ -4,6 +4,15 @@
 	<title>{{title}}</title>
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/angular-chart.css')}}">
+  <style type="text/css">
+  	.clearfix:after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
+  </style>
   <!-- Scripts -->
   <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
@@ -27,45 +36,24 @@
 <input type="submit" value="Get Results">
 </form>
 <charts>
-<div id="results">
-  <table class="table table-striped">
-    <thead>
-    <tr>
-    	<select>
-    		<option>Graph</option>
-    		<option>Tabular</option>
-    	</select>
-    </tr>
-      <tr>
-        <th>Key</th>
-        <th>Value</th>
-      </tr>
-    </thead>
-  	    <tbody>
-    {% raw %}
-      <tr ng-repeat="(key, val) in result">
-        
-        <td>{{key}}</td>
-        <td>{{val}}</td>
-        
-      </tr>
-    {% endraw %}
-    </tbody>
-  </table>
-</div>
 
-</charts>
 {% raw %}
 <!-- Actual Pagination -->
 
 
- <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='1'>
+ <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
+ <div id="results">
+	Question Number : {{number}}
+  </div>
     <something id="testjs"> {{testjs}}</something>
-      <canvas id="polar-area" class="chart chart-polar-area" chart-data="data" chart-labels="labels">
-		</canvas> 
+    <canvas id="base"class="chart-base" chart-type="type"
+  chart-data="data" chart-labels="labels" chart-legend="True">
+</canvas> 
       <div style='clear: both;'></div>
+      <div class="clearfix"> </div>
     </div>
     <div ng-show='reddit.busy'>Loading data...</div>
+
   </div>
     {% endraw %}
 

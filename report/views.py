@@ -1,10 +1,10 @@
 from report import app
 from flask import render_template,jsonify
-from flask import make_response,request
+from flask import make_response,request,current_app
 import requests
 import json
 from flask.ext.triangle import Triangle
-
+from functools import wraps
 @app.errorhandler(404)
 def not_found(error):
 
@@ -17,8 +17,8 @@ def response_post():
 	return type(data)
 
 @app.route("/report/<userid>/console/")
-
-def show_console(userid):
+@app.route("/report")
+def show_console(userid="12"):
 	# Check if ths user id has access to the perticular console
 	# if yes , redirect to console
 	# if no generate an error
@@ -32,7 +32,7 @@ def show_console(userid):
 	return render_template("console.html",title="John Doe",user=user)
 @app.route("/report/<userid>/console/q/<cid>")
 
-def init(userid,cid):
+def init(userid="12",cid="1"):
 	if len(userid)==0 or len(cid)==0:
 		abort(404)
 	# This part will come from database
@@ -79,53 +79,45 @@ def init(userid,cid):
 @app.route("/test")
 def test():
 	return render_template("test.html")
+
+# JSONP
+def support_jsonp(f):
+    """Wraps JSONified output for JSONP"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        callback = request.args.get('callback', False)
+        if callback:
+            content = str(callback) + '(' + str(f().data) + ')'
+            return current_app.response_class(content, mimetype='application/json')
+        else:
+            return f(*args, **kwargs)
+    return decorated_function
 @app.route("/api")
+# @support_jsonp
 def random_data():
 	import random
 	import json
 	types=["pie","bar"]
 	toss= random.randint(0,1)
-	if toss==0:
-		data={"typ":"pie","values":[{"value":random.randint(200,1200),"color":"#F7464A","highlight":"#FF5A5E","label": "Red"},
-    { 
-        "value": random.randint(200,1200),
-        "color": "#46BFBD",
-        "highlight": "#5AD3D1",
-        "label": "Green"
-    },
-    {
-        "value":random.randint(200,1200),
-        "color":"#FDB45C",
-        "highlight": "#FFC870",
-        "label":"Yellow"
-    }
-		]
-		}
-	elif toss==1:
-		aList=["January", "February", "March", "April", "May", "June", "July"]
-		# typ="bar"
-		random.randint(20,100)
-		data={
-		"typ":"bar",
-		"labels":aList ,
-    	"values": [
-        {
-            "label": "My First dataset",
-            "fillColor": "rgba(220,220,220,0.5)",
-            "strokeColor": "rgba(220,220,220,0.8)",
-            "highlightFill": "rgba(220,220,220,0.75)",
-            "highlightStroke": "rgba(220,220,220,1)",
-            "data": [random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100)]
-        },
-        {
-            "label": "My Second dataset",
-            "fillColor": "rgba(151,187,205,0.5)",
-            "strokeColor": "rgba(151,187,205,0.8)",
-            "highlightFill": "rgba(151,187,205,0.75)",
-            "highlightStroke": "rgba(151,187,205,1)",
-            "data": [random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100), random.randint(20,100)]
-        }
-    ]
-		}
 
-	return make_response(jsonify(data))
+	if toss==0:
+		data =[
+		{
+		"typ":"pie",
+		"labels":["A","B","C"],
+		"values":[random.randint(200,1200),random.randint(200,1200),random.randint(200,1200)]
+		}
+		]
+		return jsonify(data =data)
+		
+	elif toss==1:
+		data=[
+		{"typ":"bar",
+		"labels":["A","B","C"],
+		"values":[random.randint(20,100),random.randint(20,100),random.randint(20,100)]
+		}
+		]
+		return jsonify(data =data)
+	
+
+	# return jsonify(data =data)

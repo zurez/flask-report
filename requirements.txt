@@ -1,2 +1,2 @@
-Flask == 0.10.1
-Requests == 2.8.1
+Flask == 0.10.1.egg
+requests == 2.6.2
