@@ -18,7 +18,7 @@ def response_post():
 
 @app.route("/report/<userid>/console/")
 @app.route("/report")
-def show_console(userid="12"):
+def show_console(userid="1"):
 	# Check if ths user id has access to the perticular console
 	# if yes , redirect to console
 	# if no generate an error
