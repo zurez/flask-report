@@ -121,3 +121,9 @@ def random_data():
 	
 
 	# return jsonify(data =data)
+
+# REAL DEAL:
+
+@app.route("/")
+def show_page():
+	return render_template("index.html")

@@ -6,7 +6,7 @@ var myApp = angular.module('ReportApp',['infinite-scroll','chart.js']);
   myApp.controller('ReportController', ['$scope', '$log', '$http', '$timeout',function($scope, $log, $http, $timeout,Reddit) {
     	// Should be a Service , Don't know why it not works :(
           var Reddit = function() {
-            this.items = [];
+            this.items = [1,2,3];
             this.busy = false;
             this.after = '';
             this.counter=0
@@ -19,34 +19,39 @@ var myApp = angular.module('ReportApp',['infinite-scroll','chart.js']);
             var url = "http://localhost:5000/api";
 
 
-            $http.get(url).success(function(data) {
+            $http.get(url).success(function(data) {this.items.push(data.data[0]);this.busy = false;}.bind(this));
             	
-            	var items= data.data[0];
-            	// alert(data.data[0].typ);
-        			
-               if (data.data[0].typ=="bar") {
-               	this.counter= this.counter+1;
-                $scope.type="PolarArea";
-                $scope.labels = data.data[0].labels;
-  								$scope.data = data.data[0].values;
+      //       	var items= data.data[0];//list
+      //       	// alert(data.data[0].typ);
+      //   			this.items.push(data.data[0]);
+      //   //        if (data.data[0].typ=="bar") {
+      //   //        	this.counter= this.counter+1;
+      //   //         // $scope.type="PolarArea";
+      //   //         // $scope.labels = data.data[0].labels;
+  				// 		// 		// $scope.data = data.data[0].values;
+      //   //           this.items.push(data.data[0]);
+  						
 
               
-               }
-               else if (data.data[0].typ=="pie"){this.counter= this.counter+1;
-               					$scope.type="Pie";
-               					$scope.labels = data.data[0].labels;
-  								$scope.data = data.data[0].values;
-
+      //   //        }
+      //   //        else if (data.data[0].typ=="pie"){
+      //   //         this.counter= this.counter+1;
+      //   //        					// $scope.type="Pie";
+      //   //        					// $scope.labels = data.data[0].labels;
+  				// 		// 		// $scope.data = data.data[0].values;
+  				// 		// 			for (var i = 0; i < items.length; i++) {
+      //   // this.items.push(data.data[0]);
+      // // };
 
                					
-             	              
+      //        	     // $scope.testjs=this.items;          
   								            
-               }; 
+      //          )};
   
-              $scope.number=this.counter;
-              this.busy = false;
-            }.bind(this));
-            
+             
+            //   this.busy = false;
+            // }.bind(this));
+
           };
 
 

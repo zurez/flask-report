@@ -4,12 +4,17 @@
 	<title>{{title}}</title>
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/angular-chart.css')}}">
+
   <style type="text/css">
   	.clearfix:after { 
    content: " ";
    display: block; 
    height: 0; 
    clear: both;
+}
+.sticky{
+	position: fixed;
+
 }
 
   </style>
@@ -28,29 +33,34 @@
 </head>
 <body ng-controller="ReportController">
 
-<h1>{{user.id}}</h1>
 
-<form role="form" ng-submit="getResults()">
 
-<input type="text" ng-model="input_url" name="url" class="form-control" id="url-box">
-<input type="submit" value="Get Results">
-</form>
-<charts>
 
 {% raw %}
 <!-- Actual Pagination -->
-
-
- <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
- <div id="results">
+ <div id="results" class ="sticky">
 	Question Number : {{number}}
+	Report:
+		Total Responses: {{tr}}
+		Responses for Option 
   </div>
-    <something id="testjs"> {{testjs}}</something>
-    <canvas id="base"class="chart-base" chart-type="type"
-  chart-data="data" chart-labels="labels" chart-legend="True">
+
+ <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0.0001'>
+ <div ng-repeat="item in reddit.items">
+ {{item}}
+  <canvas style="height:400px;width 500px;"id="base"class="chart chart-{{item.typ}}" chart-type="{{item.typ}}"
+  chart-data="{{item.data}}" chart-labels="{{item.labels}}" chart-legend="True">
+
 </canvas> 
-      <div style='clear: both;'></div>
-      <div class="clearfix"> </div>
+ 	
+ </div>
+ 
+<!--     <canvas style="height:400px;width 500px;"id="base"class="chart-base" chart-type="type"
+  chart-data="data" chart-labels="labels" chart-legend="True">
+
+</canvas>  -->
+      
+      <p>.</p>
     </div>
     <div ng-show='reddit.busy'>Loading data...</div>
 
