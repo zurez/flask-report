@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="ReportApp">
 
 <head>
 
@@ -17,19 +17,36 @@
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
 
     <!-- Custom CSS -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/simple-sidebar.css')}}">
 
+      <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/simple-sidebar.css')}}">
+      <!-- Scriptd -->
+        <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script>
+  
+  <script src="{{ url_for('static', filename='js/ng-infinite-scroll.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script>
+      <!--  -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+<style type="text/css">
+    .bottom-column
+{
+    float: none;
+    display: table-cell;
+    vertical-align: bottom;
+}
 
+</style>
 </head>
 
-<body>
+<body ng-controller="ReportController">
 
     <div id="wrapper">
 
@@ -65,37 +82,49 @@
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
-
+{% raw %}
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1>Simple Sidebar</h1>
-                        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
-                    </div>
+               <div class="row">
+                <div class="col-md-4">
+                        <div class="col-md-6">Titles
+                        <table >
+                        <tr><td>Question</td></tr>
+                        <tr><td> Total responses</td></tr>
+                        <tr><td>Respone</td></tr>
+                        </table>
+                        </div>
+                        <div class="col-md-6">Attributes
+                        <table>
+                        <tr><td>Who is the President of USA?</td></tr>
+                        <tr><td>1800</td></tr></table>
+
+                        </div>
+                <!-- {{report}} --></div>
+                <div class="col-md-8">
+                    <canvas id="base" style ="width:40%;height:30%"class="chart-base" chart-type="type"
+                            chart-data="data" chart-labels="labels" chart-legend="true">
+
+                </canvas> 
                 </div>
-            </div>
+                   
+               <!-- row -->
+               <div class="row">
+                   <div class="col-md-4"><button class="btn btn-primary" ng-click="lol(cid,'p')" ng-disabled="cid<1">Prev</button></div>
+                   <div class="col-md-4"></div>
+                   <div class="col-md-4"></div>
+                   <div class="col-md-4 bottom-column"><button class="btn btn-success"ng-click="lol(cid,'n')" ng-init="cid=0">Next</button></div>
+               </div>
         </div>
+        {% endraw%}
         <!-- /#page-content-wrapper -->
 
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
+ 
+  
     </script>
 
 </body>

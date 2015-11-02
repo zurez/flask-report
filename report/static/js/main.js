@@ -6,7 +6,7 @@ var myApp = angular.module('ReportApp',['infinite-scroll','chart.js']);
   myApp.controller('ReportController', ['$scope', '$log', '$http', '$timeout',function($scope, $log, $http, $timeout,Reddit) {
     	// Should be a Service , Don't know why it not works :(
           var Reddit = function() {
-            this.items = [1,2,3];
+            this.items = [{"labels":["A","B","C"],"typ":"pie","values":[613,1060,283]}];
             this.busy = false;
             this.after = '';
             this.counter=0

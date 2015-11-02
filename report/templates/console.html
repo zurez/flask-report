@@ -26,7 +26,8 @@
   
   <script src="{{ url_for('static', filename='js/ng-infinite-scroll.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script>
+<!-- 	// <script src="{{ url_for('static', filename='js/d3.min.js') }}"></script> -->
 	
 	<script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
 
@@ -47,9 +48,9 @@
 
  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0.0001'>
  <div ng-repeat="item in reddit.items">
- {{item}}
-  <canvas style="height:400px;width 500px;"id="base"class="chart chart-{{item.typ}}" chart-type="{{item.typ}}"
-  chart-data="{{item.data}}" chart-labels="{{item.labels}}" chart-legend="True">
+ {{item.values}}
+  <canvas style="height:400px;width 500px;"id="pie"class="chart chart-pie" 
+  chart-data="{{item.values}}" chart-labels="{{item.labels}}" chart-legend="True">
 
 </canvas> 
  	

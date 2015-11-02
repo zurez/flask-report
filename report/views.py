@@ -92,9 +92,9 @@ def support_jsonp(f):
         else:
             return f(*args, **kwargs)
     return decorated_function
-@app.route("/api")
+@app.route("/api/<cid>")
 # @support_jsonp
-def random_data():
+def random_data(cid):
 	import random
 	import json
 	types=["pie","bar"]
@@ -102,7 +102,7 @@ def random_data():
 
 	if toss==0:
 		data =[
-		{
+		{"cid":cid,
 		"typ":"pie",
 		"labels":["A","B","C"],
 		"values":[random.randint(200,1200),random.randint(200,1200),random.randint(200,1200)]
@@ -112,7 +112,9 @@ def random_data():
 		
 	elif toss==1:
 		data=[
-		{"typ":"bar",
+		{
+		"cid":cid,
+		"typ":"bar",
 		"labels":["A","B","C"],
 		"values":[random.randint(20,100),random.randint(20,100),random.randint(20,100)]
 		}
