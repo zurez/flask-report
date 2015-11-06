@@ -78,7 +78,7 @@ def init(userid="12",cid="1"):
 	
 @app.route("/test")
 def test():
-	return render_template("test.html")
+	return render_template("index-old-old")
 
 # JSONP
 def support_jsonp(f):

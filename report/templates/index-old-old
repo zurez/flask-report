@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ReportApp">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Report</title>
+
+    <!-- Bootstrap Core CSS -->
+
+      <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/angular-chart.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+
+    <!-- Custom CSS -->
+
+      <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/simple-sidebar.css')}}">
+      <!-- Scriptd -->
+        <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script>
+  
+  <script src="{{ url_for('static', filename='js/ng-infinite-scroll.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script>
+      <!--  -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style type="text/css">
+    .bottom-column
+{
+    float: none;
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+</style>
+</head>
+
+<body ng-controller="ReportController">
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        {% raw %}
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+            <span></span>
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Survey Questions
+                    </a>
+                </li>
+                <span ng-repeat="item in items">
+                    <li><a href="" onclick="">Question {{item}}</a></li>
+                </span>
+                
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+            <!-- row -->
+                <div class="row">
+                   <div class="col-md-4"><button class="btn btn-primary" ng-click="lol(cid,'p')" ng-disabled="cid<1">Prev</button></div>
+                   <div class="col-md-4"></div>
+                   <div class="col-md-4"></div>
+                   <div class="col-md-4 bottom-column"><button class="btn btn-success"ng-click="lol(cid,'n')" ng-init="cid=0">Next</button></div>
+               </div>
+        </div>
+            <!--  -->
+               <div class="row">
+                <div class="col-md-4">
+                        <div class="col-md-6">Titles
+                        <table >
+                        <tr><td>Question</td></tr>
+                        <tr><td> Total responses</td></tr>
+                        <tr><td>Respone</td></tr>
+                        </table>
+                        </div>
+                        <div class="col-md-6">Attributes
+                        <table>
+                        <tr><td>Who is the President of USA?</td></tr>
+                        <tr><td>1800</td></tr></table>
+
+                        </div>
+                <!-- {{report}} --></div>
+                <div class="col-md-8">
+                    <canvas id="base" style ="width:40%;height:30%"class="chart-base" chart-type="type"
+                            chart-data="data" chart-labels="labels" chart-legend="true">
+
+                </canvas> 
+                </div>
+                   
+               <!-- row -->
+               
+        {% endraw%}
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+ 
+  
+    </script>
+
+</body>
+
+</html>
