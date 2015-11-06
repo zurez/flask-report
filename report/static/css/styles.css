@@ -147,7 +147,10 @@ a {
     border-bottom-color: #fff;
   }
 }
-
+.active-q{
+  background-color:#158F49;
+  border-color: transparent; 
+}
 /* theme */
 .btn,.form-control,.alert,.progress,.panel,.list-group,.well,.list-group-item:first-child {border-radius:1px;box-shadow:0 0 0;}
 .btn {border-color:transparent;}

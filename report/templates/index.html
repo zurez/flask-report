@@ -3,8 +3,8 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Holo Theme</title>
-		<meta name="generator" content="Bootply" />
+		<title>Report Page</title>
+		<meta name="generator" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		   <!-- Bootstrap Core CSS -->
 
@@ -14,7 +14,18 @@
 
     <!-- Custom CSS -->
     <style type="text/css">
-            
+        .hpanel{
+          background:#E8D9AC;
+          color:black;
+          font-weight: 400;
+        }
+        .htext{
+          
+        } 
+        .vpanel{
+          background:#DBAA00;
+          color:black;
+                  }   
     </style>
      
       <!-- Scriptd -->
@@ -34,7 +45,7 @@
 	</head>
 	<body ng-controller="ReportController">
 <div class="page-container">
-  
+  {% raw %}
 	<!-- top navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     	<div class="navbar-header">
@@ -54,11 +65,22 @@
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
           <div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
             <ul class="nav" id="sidebar-nav">
-              <li><a href="#">Home</a></li>
-              <li><a href="#section1">Section 1</a></li>
-              <li><a href="#section2">Section 2</a></li>
-              <li><a href="#section3">Section 3</a></li>
-              <li><a href="#">Holo Theme</a></li>
+              <li><a href="#">Survey Name</a></li>
+              <li><a href="#section1">Facebook Market Research</a></li>
+              <li><a href="#section2">Total Questions</a></li>
+              <li><a href="#section3 " class="active-q">19</a></li>
+              <li><a href="">Total Reach</a></li>
+              <li><a href="">13000</a></li>
+
+              <li><a href="">Survey Status</a></li>
+              <li><a href="">Active</a></li>
+              <li><a href="">Survey ID</a></li>
+              <li><a href="">AB1203Sur</a></li>
+              <li><a href="">Last Edited On</a></li>
+              <li><a href="">12th of November, 2015 | 9:00 AM (GMT)</a></li>
+
+
+   
             </ul>
            </div>
         </div><!--/sidebar-->
@@ -70,20 +92,25 @@
            	 <div class="col-sm-4">
                 <div class="panel panel-default">
                   <div class="panel-heading"><h4>Text Report</h4></div>
-                    <div class="panel-body">
+                    <!-- <div class="panel-body"> -->
 
                       <div class="list-group">
-                        <a href="#" class="list-group-item ">Report</a>
-                        <a href="#" class="list-group-item">Second item</a>
-                        <a href="#" class="list-group-item">Third item</a>
-                        <a href="#" class="list-group-item">Another item</a>
-                        <a href="#" class="list-group-item">Another item</a>
-                        <a href="#" class="list-group-item">Another item</a>
-                        <a href="#" class="list-group-item">Another item</a>
-                        <a href="#" class="list-group-item">Another item</a>
-                        <a href="#" class="list-group-item">Another item</a>
+                        <a href="#" class="list-group-item hpanel "><span class="htext"> Question Label</span></a>
+                        <a href="#" class="list-group-item vpanel">
+                        <span class="vtext">What is your favorite food?</span></a>
+                        <a href="#" class="list-group-item hpanel "><span class="htext">Total Responses</span></a>
+                        <a href="#" class="list-group-item vpanel">
+                        <span class="vtext">1900</span></a>
+                        <a href="#" class="list-group-item hpanel"><span class="vtext">Response for Option A</span></a>
+                        <a href="#" class="list-group-item vpanel ">1000</a>
+                        <a href="#" class="list-group-item hpanel"><span class="htext"> Response for Option B</span></a>
+                        <a href="#" class="list-group-item vpanel"><span class="vtext">600</span></a>
+                        <a href="#" class="list-group-item hpanel"><span class="vtext">Response for Option C</span></a>
+                        <a href="#" class="list-group-item vpanel ">300</a>
+                    
+              
                       </div>
-                    </div><!--/panel-body-->
+                    <!-- </div>/panel-body -->
                 </div><!--/panel-->
             </div>
              <div class="col-sm-8">
@@ -100,18 +127,19 @@
                           <button class="btn btn-success" ng-click="lol(cid,'n')" ng-init="cid=0">Next</button>
                       </div>
                       <div class="btn-group pull-right btn-toggle"> 
-                        <button class="btn btn-default" ng-click="toggleg('b')">Bar</button>
-                        <button class="btn btn-primary active" ng-click="toggleg('p')">Pie</button>
+                        <button class="btn btn-default" ng-click="toggleg('b',data)" data="{{cidvalue}}">Bar</button>
+                        <button class="btn btn-primary active" ng-click="toggleg('p',data)" data="{{cidvalue}}" >Pie</button>
                       
                       </div>
+                      
                     </div><!--/panel-body-->
-                     
+                     <span class="pull-right">*Use toggle to change between graph types</span>
                  </div><!--/panel-->
                  </div>
   
   
 
-
-	
+                 {%endraw%}
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 	</body>
 </html>
