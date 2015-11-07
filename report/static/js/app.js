@@ -9,7 +9,7 @@ myApp.controller("ReportController",['$scope','$http',function($scope,$http){
 		
 	}
 	function get_data (cid) {
-		$http.get("http://localhost:5000/api/"+cid).success(function(data){
+		$http.get("http://localhost:1991/api/"+cid).success(function(data){
 			return data
 		});
 
@@ -18,7 +18,7 @@ myApp.controller("ReportController",['$scope','$http',function($scope,$http){
 	// init
 
 	$scope.items=items;
-	$http.get("http://localhost:5000/api/0").success(function(data){
+	$http.get("http://localhost:1991/api/0").success(function(data){
 				//console.log(data);
 				$scope.cidvalue=0;
 				if (data.data[0].typ=="bar"){
@@ -103,7 +103,7 @@ myApp.controller("ReportController",['$scope','$http',function($scope,$http){
 			// alert (type);
 			l = parseInt(cid)-1;
 		};
-		var url="http://localhost:5000/api/"+l;
+		var url="http://localhost:1991/api/"+l;
 		$http.get(url).success(function(data){
 			//console.log(data);
 				if (data.data[0].typ=="bar"){
