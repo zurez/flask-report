@@ -53,12 +53,12 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
     //Get survey structure
     $http.get(survey_str).success(function(fata){
         $http.get(json_uri).success(function(data){
-            //Init
-             // $scope.type="Pie";
-             //    $scope.labels= ["A","B"];
-             //    $scope.data= [1,2];
+          // /  Init
+             $scope.type="Pie";
+                $scope.labels= ["A","B"];
+                $scope.data= [1,2];
 
-            //
+            
             var total_q=0;// a number | totalQuestions
             var o_list={};//o_list= ["cid2":{label:"",options=[]},"cid 3"]
             var q_list=[]; //q_listist=["cid3","cid4"] | questionList
@@ -104,19 +104,20 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
         };
         $scope.lol= function  (cid,typer) {
 
-        var max = q_list.length;//Max length of the Report
-       // console.log("cid: "+ cid);
+        var max = q_list.length-1;//Max length of the Report
+      
         var new_cid;
+
         if (parseInt(cid)==0) {
             $scope.c=3;
         };
-        if (parseInt(cid)==max) {
+        if (parseInt(cid)>max) {
             $scope.d= 6;
             // $scope.cid= new_cid;
 
             console.log("Finished");
         };
-        if (typer=="n" && parseInt(cid)<max) {
+        if (typer=="n") {
              //rt(typer);
             new_cid= parseInt(cid) +1;
             $scope.c=6;
@@ -125,6 +126,7 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
             // alert (type);
             new_cid = parseInt(cid)-1;
         }
+  
         $scope.cid= new_cid;
         
         // else if(new_cid){$scope.c=5;};
@@ -133,8 +135,9 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
         var lbl,dta,question;
         //get real cid for q_listist
         var r_cid= q_list[cid];
+
         if (type_list[r_cid]=="short_text"){console.log("short_text");}  else{};// if input type or something else
-        // console.log(restrc);
+        
         
         //get question and answer from o_list;
  
@@ -145,8 +148,10 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
         //         question=o_list[i].label;
         //     };
         // };
+       
         lbl= o_list[r_cid].option;
         question= o_list[r_cid].label;
+
         //get answer values from restrc
         // for (var i = 0; i < restrc.length; i++) {
         //     // console.log($scopeo.q_list[i]);
@@ -155,13 +160,15 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
                 
         //     };
         // };
-        console.log(restrc);
-        data = restrc[r_cid].ans;
+        
+        // data = restrc[r_cid].ans;
+        console.log[o_list["c10"].label];
         $scope.type="Pie";
         $scope.labels=lbl;//the options
+
         $scope.data=dta;//the values
         $scope.cid=new_cid;//set the new cid
-        
+       
     }
             
         });//data
