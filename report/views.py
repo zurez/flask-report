@@ -5,10 +5,10 @@ import requests
 import json
 from flask.ext.triangle import Triangle
 from functools import wraps
-@app.errorhandler(404)
-def not_found(error):
+# @app.errorhandler(404)
+# def not_found(error):
 
-    return make_response(jsonify({'error': 'Not found'}), 404)
+#     return make_response(jsonify({'error': 'Not found'}), 404)
 @app.route("/report/12/console",methods=['POST'])
 def response_post():
 	data = json.loads(request.data.decode())
@@ -76,8 +76,8 @@ def init(userid="12",cid="1"):
 	}
 	return make_response(jsonify(data))
 	
-@app.route("/test")
-def test():
+@app.route("/survey/s:<id>/analysis")
+def test(id):
 	return render_template("test.html")
 
 # JSONP
@@ -129,3 +129,109 @@ def random_data(cid):
 @app.route("/")
 def show_page():
 	return render_template("index.html")
+@app.route("/api/survey/s:<s_id>/response/aggregate")
+def strc(s_id):
+	data={
+    "columns": [
+        "response_id",
+        "added",
+        "c2",
+        "c6",
+        "c11"
+    ],
+    "len": 5,
+    "page": 0,
+    "rows": [
+        [
+            "naa1K63BqNJ9d4JOJma",
+            "0001-01-01 00:00:00",
+            "Answer 2",
+            "null",
+            "null"
+        ],
+        [
+            "Amm7OweBkaBgLDkw4dg",
+            "0001-01-01 00:00:00",
+            "Answer 222",
+            "Answer 1111",
+            "Answer 1111 ghjbkn"
+        ],
+        [
+            "QKKkXXeppaWKOJ2eO8z",
+            "0001-01-01 00:00:00",
+            "null",
+            "null",
+            "Answer 1111 ghjbkn"
+        ],
+        [
+            "epp164K4rOaJ9GNX8Vx",
+            "2015-11-04 16:34:23.360000",
+            "null",
+            "null",
+            "Answer 1111 ghjbkn"
+        ],
+        [
+            "BLLe7zKvkJj6GGQ43WO",
+            "2015-11-04 17:52:58.664000",
+            "null",
+            " null",
+            "Answer 1111 ghjbkn"
+        ]
+    ],
+    "survey_id": "vOOWYJz55rVLbXr7zoq"
+	}
+	return jsonify(data)
+
+@app.route("/api/survey/s:<s_id>/json")
+def log(s_id):
+	data={
+	  "fields": [
+	    {
+	      "cid": "c2",
+	      "field_options": [],
+	      "field_type": "short_text",
+	      "gametype": "text_scene",
+	      "label": "What is your name?",
+	      "next": {
+	        "va": "c6"
+	      },
+	      "required": True
+	    },
+	    {
+	      "cid": "c6",
+	      "field_options": [
+	        "Yes",
+	        "No"
+	      ],
+	      "field_type": "yes_no",
+	      "gametype": "car",
+	      "label": "Have you gone on Facebook ever before?",
+	      "next": {
+	        "va": "c10"
+	      },
+	      "required": True
+	    },
+	    {
+	      "cid": "c10",
+	      "field_options": [
+	        "Reading about friends",
+	        "Chatting with friends",
+	        "Finding new people",
+	        "Reading (news, articles)",
+	        "Shopping"
+	      ],
+	      "field_type": "multiple_choice",
+	      "gametype": "balloon",
+	      "label": "What do you primarily use Facebook for?",
+	      "next": {
+	        "va": "end"
+	      },
+	      "required": True
+	    }
+	  ],
+	  "game_title": "Demo Survey",
+	  "game_description": "Demo Description",
+	  "game_footer": "Demo Footer",
+	  "survey_id": "8NNaDvdGm3J1qwzDLbd"
+		}
+	return jsonify(data)

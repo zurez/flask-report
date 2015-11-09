@@ -1,55 +1,33 @@
 <!DOCTYPE html>
 <html ng-app="ReportApp">
 <head>
-	<title>Test</title>
-	<script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/ng-infinite-scroll.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
+  <title>Test</title>
 
+  <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script>
+  
+ 
+    <script src="{{ url_for('static', filename='js/new-app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script>
+  // <script type="text/javascript">
+  // angular.module("ReportApp",[]).controller("ReportController",['$scope','$location',function($scope,$location,UriTemplate){
+  //   function extractor (url,ex) {
+      
+  //   }
+
+  // var s_id =$location.absUrl().split("/");
+  //   $scope.s= s_id[4].split(":")[1];
+  // }]);
+  </script>
 </head>
 <body ng-controller="ReportController">
+{% raw %}
+{{title}}
+{{q_total}}
+{{total_r}}
+  {%endraw%}
 
-<form role="form" ng-submit="getResults()">
-
-<input type="text" ng-model="input_url" name="url" class="form-control" id="url-box">
-<input type="submit" value="Get Results">
-</form>
-<charts>
-<div id="results">
-  <table class="table table-striped">
-    <thead>
-    <tr>
-    	<select>
-    		<option>Graph</option>
-    		<option>Tabular</option>
-    	</select>
-    </tr>
-      <tr>
-        <th>Key</th>
-        <th>Value</th>
-      </tr>
-    </thead>
-
-    <tbody>
-    {% raw %}
-      <tr ng-repeat="(key, val) in result">
-        
-        <td>{{key}}</td>
-        <td>{{val}}</td>
-        
-      </tr>
-    {% endraw %}
-    </tbody>
-  </table>
-  <chart></chart>
-</div>
-
-</charts>
-<script src="{{ url_for('static', filename='js/ng-app/app.js') }}"></script>
-<!-- Controllers -->
-
-<script src="{{ url_for('static', filename='js/ng-app/Controllers/ReportController.js') }}"></script>
-<!-- Directives -->
 </body>
 </html>
