@@ -2,6 +2,9 @@
 <html ng-app="ReportApp">
 <head>
   <title>Test</title>
+ <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/angular-chart.css')}}">
+<!--         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}"> -->
+    <!--      <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/styles.css')}}"> -->
 
   <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
@@ -11,7 +14,7 @@
  
     <script src="{{ url_for('static', filename='js/new-app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script>
-  // <script type="text/javascript">
+  <script type="text/javascript">
   // angular.module("ReportApp",[]).controller("ReportController",['$scope','$location',function($scope,$location,UriTemplate){
   //   function extractor (url,ex) {
       
@@ -24,9 +27,19 @@
 </head>
 <body ng-controller="ReportController">
 {% raw %}
-{{title}}
+{{stitle}}
 {{q_total}}
 {{total_r}}
+
+ <canvas id="base" class="chart-base" chart-type="type"
+                            chart-data="data" chart-labels="labels" chart-legend="true">
+
+                </canvas> 
+<button ng-click="toggle = !toggle">{{toggleText}}</button>
+  <button class=" btn btn-primary" ng-click="lol(cid,'p')" ng-disabled="c<5" >Prev</button>
+         <button class="btn btn-success" ng-click="lol(cid,'n')" ng-init="cid=0;c=4;d=5"  ng-disabled="d>5">Next</button>
+<div ng-repeat="item in ites">{{item}}</div>
+<div ng-repeat="i in q">{{i}}</div>
   {%endraw%}
 
 </body>
