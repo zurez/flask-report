@@ -28,7 +28,7 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
     return [a, b];
 
     }//func2
-   
+
     //Function 3
     $scope.toggle= true;
     $scope.$watch('toggle',function(){
@@ -54,15 +54,17 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
     $http.get(survey_str).success(function(fata){
         $http.get(json_uri).success(function(data){
           // /  Init
+          $scope.stitle=fata.game_title;
+          $scope.s_id= fata.survey_id;
              $scope.type="Pie";
-                $scope.labels= ["A","B"];
-                $scope.data= [1,2];
+                $scope.labels= ["A","B","C"];
+                $scope.data= [1,2,0];
 
             
             var total_q=0;// a number | totalQuestions
             var o_list={};//o_list= ["cid2":{label:"",options=[]},"cid 3"]
             var q_list=[]; //q_listist=["cid3","cid4"] | questionList
-            var stitle= fata.game_title;
+         
             var type_list={};
             // 
 
@@ -79,6 +81,7 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
              
 
                 // 
+                $scope.q_total=total_q;
                 
                 $scope.total_r = data.len;
         
@@ -162,15 +165,25 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
         // };
         
         // data = restrc[r_cid].ans;
-        console.log[o_list["c10"].label];
+        console.log(restrc[r_cid].ans);
+
         $scope.type="Pie";
         $scope.labels=lbl;//the options
-
-        $scope.data=dta;//the values
+        $scope.question=question;
+        $scope.data=restrc[r_cid].ans;//the values
         $scope.cid=new_cid;//set the new cid
+        // Now get all individual responses :
+    //something like Option label : Response Value
+    var a = {};
+    for (var i = 0; i < lbl.length; i++) {
+        a[lbl[i]]=restrc[r_cid].ans[i];
+    };
+    $scope.rep = a;
+
+            
        
     }
-            
+
         });//data
     }); //fata
     
