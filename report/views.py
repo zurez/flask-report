@@ -3,7 +3,7 @@ from flask import render_template,jsonify
 from flask import make_response,request,current_app
 import requests
 import json
-from flask.ext.triangle import Triangle
+# from flask.ext.triangle import Triangle
 from functools import wraps
 # @app.errorhandler(404)
 # def not_found(error):
