@@ -97,7 +97,7 @@ myApp.controller("ReportController",["$http","$scope","$location",function($http
     					var options_map= options_map(); //Useful for getting labels
     					
     					//check if all options are counted
-    					//Big mistake count[0]==[a_1, a_2] but question_options = [text ,]
+    					//Big mistake count[0]==[a_1, a_2] but question_options = [text ,] ==Solved!
     					if (count[0].length!= $scope.question_options.length) {
     						//This means some options have not been counted,
     						//Find out which options have not been counted.
@@ -112,7 +112,7 @@ myApp.controller("ReportController",["$http","$scope","$location",function($http
     						
     					}
     					//Some graph variables
-    					var type , label, series;
+    					var type , series;
     					//Now Set the Graph
     					 if ($scope.question_type=="short_text") {
     					 	$scope.right_title= "Responses";
@@ -125,12 +125,22 @@ myApp.controller("ReportController",["$http","$scope","$location",function($http
     					 		for (var i = 0; i < count_options.length; i++) {
     					 			labels.push(count_options[i]);
     					 		};
-    					 		$scope.label= count_options;
+    					 		$scope.label=labels;
     					 }
     					 else if ($scope.question_type=="multiple_choice"){}
     					 else if ($scope.question_type=="ranking"){}
     					 else if ($scope.question_type=="rating"){}
-    					 else if ($scope.question_type=="yes_no"){};
+    					 else if ($scope.question_type=="yes_no"){
+    					 		$scope.type="Pie";
+
+    					 		$scope.data=count_options_total;
+    					 		console.log($scope.data);
+    					 		var labels=[];
+    					 		for (var i = 0; i < count_options.length; i++) {
+    					 			labels.push(count_options[i]);
+    					 		};
+    					 		$scope.label=labels;
+    					 };
 
 
     					for (var i = 0; i < count[0].length; i++) {
