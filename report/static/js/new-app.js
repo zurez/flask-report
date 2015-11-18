@@ -31,12 +31,30 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
 
     //Function 3
     $scope.toggle= true;
-    $scope.$watch('toggle',function(){
-        $scope.toggleText = $scope.toggle ? 'Pie' : 'Polar';
-        $scope.type = $scope.type === 'PolarArea' ?
-        'Pie' : 'PolarArea';
+    var al = "lol";
+    $scope.$watch('toggle',function(al){
+        $scope.toggleText = $scope.toggle ? 'Pie' : 'Bar';
+        $scope.type = $scope.type === 'Bar' ?
+        'Pie' : 'Bar';
+       
+
         
     })
+
+    function create_graph (raw_data,type,raw_labels) {
+        //raw_data is cot returned value
+        if (type=="multiple_choice") {
+            //Get top four values from raw_data
+            //a_1### to real world value 
+            //
+
+
+
+        };
+        else if (type=="short_text") {};
+
+        // body...
+    }
 
   
 
@@ -56,9 +74,9 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
           // /  Init
           $scope.stitle=fata.game_title;
           $scope.s_id= fata.survey_id;
-             $scope.type="Pie";
-                $scope.labels= ["A","B","C"];
-                $scope.data= [1,2,0];
+             // $scope.type="Pie";
+             //    $scope.labels= ["A","B","C"];
+             //    $scope.data= [1,2,0];
 
             
             var total_q=0;// a number | totalQuestions
@@ -99,37 +117,52 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
                         tempAns.push(r[j][i]);
 
                     };
+
                  
 
                 // restrc.push({"cid":cid,"ans":cot(tempAns)[1]});//I hope count works.lol 
-                restrc[cid]={"ans":cot(tempAns)[1]};
+                restrc[cid]={"o":cot(tempAns)[0],"ans":cot(tempAns)[1]};
                 $scope.ites=restrc  ;
         };
+        // init
+        
+        var init_r_cid=q_list[0];
+        console.log(init_r_cid);
+        var init_lbl= o_list[init_r_cid].option;
+        var init_question= o_list[init_r_cid].label;
+        $scope.type="Bar";
+        
+        $scope.labels=init_lbl;//the options
+        $scope.question=init_question;
+        //$scope.data=restrc[init_r_cid].ans;//the values
+        $scope.data= [1,2,3];
+
+        
         $scope.lol= function  (cid,typer) {
 
         var max = q_list.length-1;//Max length of the Report
       
         var new_cid;
 
-        if (parseInt(cid)==0) {
-            $scope.c=3;
-        };
-        if (parseInt(cid)>max) {
-            $scope.d= 6;
-            // $scope.cid= new_cid;
+        // if (parseInt(cid)==0) {
+        //     $scope.c=3;
+        // };
+        // if (parseInt(cid)>max) {
+        //     $scope.d= 6;
+        //     // $scope.cid= new_cid;
 
-            console.log("Finished");
-        };
+        //     console.log("Finished");
+        // };
         if (typer=="n") {
              //rt(typer);
             new_cid= parseInt(cid) +1;
             $scope.c=6;
         }
         else if (typer=="p") {
-            // alert (type);
+           
             new_cid = parseInt(cid)-1;
         }
-  
+        
         $scope.cid= new_cid;
         
         // else if(new_cid){$scope.c=5;};
@@ -138,8 +171,17 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
         var lbl,dta,question;
         //get real cid for q_listist
         var r_cid= q_list[cid];
+    
 
-        if (type_list[r_cid]=="short_text"){console.log("short_text");}  else{};// if input type or something else
+        if (type_list[r_cid]=="short_text"){
+            console.log("short_text");
+            $scope.right_title="Responses";
+
+
+
+        }  else{
+            $scope.right_title= "Graph";
+        };// if input type or something else
         
         
         //get question and answer from o_list;
@@ -165,7 +207,22 @@ myApp.controller("ReportController",["$scope","$log","$http","$location",functio
         // };
         
         // data = restrc[r_cid].ans;
-        console.log(restrc[r_cid].ans);
+      //Option Values are in the form of a_*;rest
+      var lolwut= {};
+
+      for (var i = 0; i < restrc[r_cid].o.length; i++) {
+          lolwut[restrc[r_cid].o[i]]=restrc[r_cid].ans[i];
+          
+      };
+      console.log(lolwut);
+      //check if any option is not part of the count |Counters Zero Error
+      for (var i = 0; i < q_list.length; i++) {
+         var key = "a_"+i;
+         if (!key in lolwut) {
+                lolwut[key]=0;
+         };
+      };
+      
 
         $scope.type="Pie";
         $scope.labels=lbl;//the options
