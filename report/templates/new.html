@@ -7,23 +7,35 @@
 	<script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
 	 <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/app-new.js') }}"></script>
+	<style>
+	.hidden {
+		display: none;
+	}
+	.above{
+		position: absolute;
+		z-index: 9999999;
+	}
+
+	</style>
 </head>
 <body ng-controller= "ReportController">
 {%raw%}
 <b>Survey Title </b>: {{stitle || SurveyNameNotFound}}
 
-<h2>{{type||Graph}}</h2>
+<h2>{{typed||Graph}}</h2>
 <h3><b>Question: </b>{{question_label}}</h3>
 <h3>Cid : {{cid}}</h3>
 <h3>Type : {{question_type}}</h3>
- <canvas id="base" class="chart-base" chart-type="type"
-                            chart-data="data" chart-labels="labels" chart-legend="true">
-
+<span id= "right_area" ngClass="{{vis}}">
+<span class= "above">{{text}}</span>
+ <canvas  id="base lolwut" class="chart-base" chart-type="type"
+                            chart-data="data" chart-labels="labels" chart-legend="true" >
+                            	
                 </canvas> 
-
+                </span>
 <button ng-click=navigate("prev") ng-disabled= "counter<1">Prev</button>
 <button ng-click= navigate("next") ng-disabled= "counter>total_question-2">Next</button>
-
+<button ng-click='destroy("lolwut")'>Destr</button>
 {%endraw%}
 </body>
 </html>

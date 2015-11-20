@@ -154,11 +154,14 @@
 
           scope.$watch('chartType', function (newVal, oldVal) {
             if (isEmpty(newVal)) return;
+
             if (angular.equals(newVal, oldVal)) return;
             if (chart) chart.destroy();
             createChart(newVal);
           });
-
+          function chart_destroy (chart) {
+            chart.destroy();
+          }
           scope.$on('$destroy', function () {
             if (chart) chart.destroy();
           });
@@ -309,6 +312,7 @@
         })
       };
     }
+
 
     function getData (labels, data, colours) {
       return labels.map(function (label, i) {

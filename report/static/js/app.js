@@ -22,11 +22,11 @@ myApp.controller("ReportController",['$scope','$http',function($scope,$http){
 				//console.log(data);
 				$scope.cidvalue=0;
 				if (data.data[0].typ=="bar"){
-					console.log("bar");
-					$scope.type="Bar";
-					$scope.series=["A",""];
-        			$scope.labels = data.data[0].labels;
-  					$scope.data = [data.data[0].values,[]];
+					// console.log("bar");
+					// $scope.type="Bar";
+					
+     //    			$scope.labels = data.data[0].labels;
+  			// 		$scope.data = [data.data[0].values,[]];
 				}
 				else if (data.data[0].typ=="pie"){
 					console.log("pie");
@@ -107,12 +107,8 @@ myApp.controller("ReportController",['$scope','$http',function($scope,$http){
 		$http.get(url).success(function(data){
 			//console.log(data);
 				if (data.data[0].typ=="bar"){
-					console.log("bar");
-					$scope.type="Bar";
-					$scope.series=["A",""];
-        			$scope.labels = data.data[0].labels;
-  					$scope.data = [data.data[0].values,[]];
-				}
+				alert("kk")
+				}	
 				else if (data.data[0].typ=="pie"){
 					console.log("pie");
 					$scope.type="Pie";
