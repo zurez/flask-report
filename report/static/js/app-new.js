@@ -4,48 +4,33 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
 	//ToDO
 	//Change Panel for Non Graphical Report
 	//
-	function clean(){
-		var myEl = angular.element( document.querySelector("#right_area") );
-			myEl.empty();
-	}
-	function add()  {
-		var myEl = angular.element( document.querySelector("#right_area") );
-		myEl.append("Text");
-	}
-	function add_canvas () {
-		var myEl = angular.element( document.querySelector("#right_area") );
-		var htmlsnipp='<canvas id="base lolwut" class="chart-base" chart-type="type"chart-data="data" chart-labels="labels" chart-legend="true" ></canvas> ';
-		myEl.append(htmlsnipp);
-	}
-	$scope.destroy=function clearChart() {
+	
 
-		ChartJs.Chart.instances[key].destroy();
-    if (document.getElementById(elementId)) {
-    		console.log("Destroyed");
-        var charts = ChartJs.Chart.instances; // Get all chart instances
 
-        for (var key in charts){ // loop looking for the chart you want to remove
-        	ChartJs.Chart.instances[key].destroy();
-            if (!charts.hasOwnProperty(key)){
-            	console.log("something");
-                continue;
+    
+    // if (document.getElementById(elementId)) {
+    // 		console.log("Destroyed");
+    //     var charts = ChartJs.Chart.instances; // Get all chart instances
+    //     console.log(charts)
+
+    //     for (var key in charts){ // loop looking for the chart you want to remove
+    //     	ChartJs.Chart.instances[key].destroy();
+    //         if (!charts.hasOwnProperty(key)){
+    //         	console.log("something");
+    //             continue;
                 
-            }
-            var chartAux = ChartJs.Chart.instances[key]; 
-            if (chartAux.chart.ctx.canvas.id === elementId){ 
-                // Remove chart-legend before destroying the chart
-                var parent = chartAux.chart.ctx.canvas.parentElement;
-                var legend = chartAux.chart.ctx.canvas.nextElementSibling;
-                parent.removeChild(legend);
-                // Compare id with elementId passed by and if it is the one            
-                // you want to remove just call the destroy function
-                ChartJs.Chart.instances[key].destroy(); 
+    //         }
+    //         
+    //         if (chartAux.chart.ctx.canvas.id === elementId){ 
                 
-            }
-        }
-    }
-}
-    // Helper function 2
+    //             // Compare id with elementId passed by and if it is the one            
+    //             // you want to remove just call the destroy function
+    //             ChartJs.Chart.instances[key].destroy(); 
+                
+    //         }
+    //     }
+    // }
+  // Helper function 2
     function cot (arr) {
        var a = [], b = [], prev;
 
@@ -89,14 +74,26 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
     			
     			$scope.typed="Text";
     			$scope.counter= 0;
-    			//Destroy Chat
+    			// Destroy Chat
     					 $scope.$on('create', function (event, chart) {
 							        
-							        $scope.charth = chart;
-							        console.log(chart);
+							       $scope.chartid= chart.id;
+                                    console.log(chart.id);
 										});
     						
-    				//
+    				    $scope.destroy=function clearChart() {
+                            alert($scope.chartid);
+                            var key = "something"
+                            // Remove chart-legend before destroying the chart
+                            try{
+                            var chartAux = ChartJs.Chart.instances[$scope.id]; 
+                            var parent = chartAux.chart.ctx.canvas.parentElement;
+                            var legend = chartAux.chart.ctx.canvas.nextElementSibling;
+                            parent.removeChild(legend);
+                            ChartJs.Chart.instances[$scope.chartid].destroy(); 
+                            }
+                            catch(err){console.log("Error in Destroy", err);}
+                        }
 
     			//We need to put up an init code here :(
     				//So that the user doesn't sees an empty page.
@@ -180,9 +177,11 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
     					var type , series;
     					//Now Set the Graph
     					 if ($scope.question_type=="short_text") {
-    					 	//write a function to get responses.
+    					 	
+                            //write a function to get responses.
     					 	$scope.vis="hidden";
     					 	$scope.text= "Coming Soon ......";
+
     					 }
     					 else if ($scope.question_type=="single_choice"){
 
