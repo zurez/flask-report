@@ -18,14 +18,14 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
 		myEl.append(htmlsnipp);
 	}
 	$scope.destroy=function clearChart() {
-		var elementId= "base";
-		console.log(ChartJs.Chart.instances);
-		ChartJs.Chart.instances["chart-3"].destroy();
+
+		ChartJs.Chart.instances[key].destroy();
     if (document.getElementById(elementId)) {
     		console.log("Destroyed");
         var charts = ChartJs.Chart.instances; // Get all chart instances
 
         for (var key in charts){ // loop looking for the chart you want to remove
+        	ChartJs.Chart.instances[key].destroy();
             if (!charts.hasOwnProperty(key)){
             	console.log("something");
                 continue;
@@ -93,6 +93,7 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
     					 $scope.$on('create', function (event, chart) {
 							        
 							        $scope.charth = chart;
+							        console.log(chart);
 										});
     						
     				//
@@ -181,38 +182,54 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
     					 if ($scope.question_type=="short_text") {
     					 	//write a function to get responses.
     					 	$scope.vis="hidden";
-    					 	$scope.text= "Lol hfjfjff \n nhfhfhfhfh";
+    					 	$scope.text= "Coming Soon ......";
     					 }
     					 else if ($scope.question_type=="single_choice"){
 
-    					 		// $scope.type="Pie";
-    					 		// $scope.data=count_options_total;
-
-    					 		// var labels=[];
-    					 		// for (var i = 0; i < count_options.length; i++) {
-    					 		// 	labels.push(count_options[i]);
-    					 		// };
-    					 		// $scope.label=labels;
-    					 }
+    					    					 }
     					 else if ($scope.question_type=="multiple_choice"){
     					 	$scope.text= "";
     					 	$scope.type="Bar";
     					 	$scope.data=[count_options_total];
+
     					 	var label=[];
     					 	for (var i = 0; i < count_options.length; i++) {
+
     					 		var single_option= count_options[i].split("###");
-    					 		console.log("single_option", count_options);
+    					 	
     					 		var to_push= "";
-    					 		for (var i = 0; i < single_option.length; i++) {
-    					 			to_push= to_push + " "+ options_map[single_option[i]];};
-    					 		label.push(to_push);
+    					 		for (var j = 0; j < single_option.length; j++) {
+    					 		 	to_push += " "+ options_map[single_option[j]];
+    					 		 };
+    					 		
+    					 		 label.push(to_push);
 
     					 	};
+    					 	
     					 	$scope.labels=label;
 
     					 }
     					 else if ($scope.question_type=="ranking"){}
-    					 else if ($scope.question_type=="rating"){}
+    					 else if ($scope.question_type=="rating"){
+    					 	$scope.text="";
+    					 	$scope.type="Bar";
+    					 	
+
+    					 	//Create a range of data for this type 1-4,5-7,8-10
+    					 	//get raw_data
+    					 	var a =0,b=0,c=0;
+    					 	for (var i = 0; i < responses_for_a_cid.length; i++) {
+    					 		var value = parseInt(responses_for_a_cid[i]);
+    					 		if (value<5) {a+=1;} else if (value>4 && value <8) {b+=1;} else if(value>7){c+=1;};
+    					 	};
+
+
+    					 		
+    					 		
+
+    					 	$scope.labels =["Below 5", "Between 5 and 7", "Above 7"];
+    					 	$scope.data= [[a,b,c]];
+    					 }
     					 else if ($scope.question_type=="yes_no"){
     					 $scope.text=""; //Remove the text thing.
    				 		 $scope.type="Bar";
