@@ -9,7 +9,11 @@
 	<script src="{{ url_for('static', filename='js/app-new.js') }}"></script>
 	<style>
 	.hidden {
-		display: none;
+		display: none!important;
+		color: red;
+	}
+	.visible {
+
 	}
 	.above{
 		position: absolute;
@@ -22,17 +26,18 @@
 {%raw%}
 <b>Survey Title </b>: {{stitle || SurveyNameNotFound}}
 
-<h2>{{typed||Graph}}</h2>
+<h2 ng-class= "gclass" class="hidden">{{typed||Graph}}</h2>
 <h3><b>Question: </b>{{question_label}}</h3>
 <h3>Cid : {{cid}}</h3>
 <h3>Type : {{question_type}}</h3>
-<span id= "right_area" ngClass="{{vis}}">
-<span class= "above">{{text}}</span>
- <canvas  id="base lolwut" class="chart-base" chart-type="type"
+
+
+ <canvas  ng-show="cond" id="base lolwut" class="chart-base" chart-type="type"
                             chart-data="data" chart-labels="labels" chart-legend="true" >
                             	
                 </canvas> 
-                </span>
+ <div id = "text" ng-hide="cond">{{text}} </div>
+               
 <button ng-click=navigate("prev") ng-disabled= "counter<1">Prev</button>
 <button ng-click= navigate("next") ng-disabled= "counter>total_question-2">Next</button>
 <button ng-click='destroy("lolwut")'>Destr</button>

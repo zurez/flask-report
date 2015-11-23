@@ -5,31 +5,6 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
 	//Change Panel for Non Graphical Report
 	//
 	
-
-
-    
-    // if (document.getElementById(elementId)) {
-    // 		console.log("Destroyed");
-    //     var charts = ChartJs.Chart.instances; // Get all chart instances
-    //     console.log(charts)
-
-    //     for (var key in charts){ // loop looking for the chart you want to remove
-    //     	ChartJs.Chart.instances[key].destroy();
-    //         if (!charts.hasOwnProperty(key)){
-    //         	console.log("something");
-    //             continue;
-                
-    //         }
-    //         
-    //         if (chartAux.chart.ctx.canvas.id === elementId){ 
-                
-    //             // Compare id with elementId passed by and if it is the one            
-    //             // you want to remove just call the destroy function
-    //             ChartJs.Chart.instances[key].destroy(); 
-                
-    //         }
-    //     }
-    // }
   // Helper function 2
     function cot (arr) {
        var a = [], b = [], prev;
@@ -75,25 +50,43 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
     			$scope.typed="Text";
     			$scope.counter= 0;
     			// Destroy Chat
-    					 $scope.$on('create', function (event, chart) {
-							        
-							       $scope.chartid= chart.id;
-                                    console.log(chart.id);
-										});
+				 $scope.$on('create', function (event, chart) {
+					        
+					       $scope.chartid= chart.id;
+                          
+								});
     						
-    				    $scope.destroy=function clearChart() {
-                            alert($scope.chartid);
-                            var key = "something"
-                            // Remove chart-legend before destroying the chart
-                            try{
-                            var chartAux = ChartJs.Chart.instances[$scope.id]; 
-                            var parent = chartAux.chart.ctx.canvas.parentElement;
-                            var legend = chartAux.chart.ctx.canvas.nextElementSibling;
-                            parent.removeChild(legend);
-                            ChartJs.Chart.instances[$scope.chartid].destroy(); 
-                            }
-                            catch(err){console.log("Error in Destroy", err);}
+			    $scope.destroy=function clearChart() {
+               
+                        // var key = "something"
+                        // Remove chart-legend before destroying the chart
+                        try{
+                        // var chartAux = ChartJs.Chart.instances[$scope.id]; 
+                        // var parent = chartAux.chart.ctx.canvas.parentElement;
+                        // var legend = chartAux.chart.ctx.canvas.nextElementSibling;
+                        // parent.removeChild(legend);
+                     
+
+                        ChartJs.Chart.instances[$scope.chartid].destroy(); 
                         }
+                        catch(err){console.log("Error in Destroy", err);}
+                }
+                
+                function clearChart () {
+                    
+                        $scope.gclass= "hidden";
+                        // ChartJs.Chart.instances[$scope.chartid].destroy(); 
+           
+                }
+                // Catch Emitter
+                $scope.$on('create', function (event, chart) {
+                    console.log("Create");
+           
+                });
+                    $scope.$on('updated', function (event, chart) {
+                 
+                });
+
 
     			//We need to put up an init code here :(
     				//So that the user doesn't sees an empty page.
@@ -101,7 +94,7 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
     			//Navigation Button Control
     			$scope.navigate= function(type){
     											
-    					// clean();
+    					
     					if (type=="next") {$scope.counter+=1;}
     					else if (type=="prev") {$scope.counter-=1;};
     					//get cid
@@ -176,18 +169,19 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
 
     					var type , series;
     					//Now Set the Graph
-    					 if ($scope.question_type=="short_text") {
-    					 	
+    					 if ($scope.question_type=="short_text" || $scope.question_type=="long_text") {
+    					 	// clean();
+                            clearChart();
+                            $scope.cond=false;
                             //write a function to get responses.
-    					 	$scope.vis="hidden";
+    					 
     					 	$scope.text= "Coming Soon ......";
 
     					 }
-    					 else if ($scope.question_type=="single_choice"){
-
-    					    					 }
+    				
     					 else if ($scope.question_type=="multiple_choice"){
     					 	$scope.text= "";
+                            $scope.cond=true;
     					 	$scope.type="Bar";
     					 	$scope.data=[count_options_total];
 
@@ -208,10 +202,15 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
     					 	$scope.labels=label;
 
     					 }
-    					 else if ($scope.question_type=="ranking"){}
+    					 else if ($scope.question_type=="ranking"){
+                            $scope.text="";
+                            $scope.cond=true;
+                            
+                         }
     					 else if ($scope.question_type=="rating"){
     					 	$scope.text="";
     					 	$scope.type="Bar";
+                             $scope.cond=true;
     					 	
 
     					 	//Create a range of data for this type 1-4,5-7,8-10
@@ -229,8 +228,9 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
     					 	$scope.labels =["Below 5", "Between 5 and 7", "Above 7"];
     					 	$scope.data= [[a,b,c]];
     					 }
-    					 else if ($scope.question_type=="yes_no"){
+    					 else if ($scope.question_type=="yes_no" || $scope.question_type=="single_choice"){
     					 $scope.text=""; //Remove the text thing.
+                          $scope.cond=true;
    				 		 $scope.type="Bar";
     					 $scope.data=[count_options_total];
 				 		 var labels=[];
