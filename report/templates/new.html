@@ -40,7 +40,8 @@
                
 <button ng-click=navigate("prev") ng-disabled= "counter<1">Prev</button>
 <button ng-click= navigate("next") ng-disabled= "counter>total_question-2">Next</button>
-<button ng-click='destroy("lolwut")'>Destr</button>
+
+<div ng-repeat="for x in q_list">{{x}}</div>
 {%endraw%}
 </body>
 </html>

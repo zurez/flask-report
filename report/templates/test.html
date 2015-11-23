@@ -30,12 +30,12 @@
      
       <!-- Scriptd -->
         <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script>
   
  
-    <script src="{{ url_for('static', filename='js/new-app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app-new.js') }}"></script>
     <!-- // <script src="{{ url_for('static', filename='js/angular-chart.js') }}"></script> -->
   
     <!--[if lt IE 9]>
@@ -66,7 +66,7 @@
           <div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
             <ul class="nav" id="sidebar-nav">
               <li><a href="#">Survey Name</a></li>
-              <li><a href="#section1">{{stitle}}</a></li>
+              <li><a href="#section1">{{stitle || SurveyNameNotFound}}</a></li>
               <li><a href="#section2">Total Questions</a></li>
               <li><a href="#section3 " class="active-q">{{q_total}}</a></li>
               <li><a href="">Total Reach</a></li>
@@ -96,7 +96,7 @@
 
                       <div class="list-group">
 
-                        <a href="#" class="list-group-item hpanel "><span class="htext"> <b>{{question}}</b></span></a>
+                        <a href="#" class="list-group-item hpanel "><span class="htext"> <b>{{question_label}}</b></span></a>
                         <div ng-repeat= "(x,y) in rep">
                           <a href="#" class="list-group-item vpanel">
                         <span class="vtext">Option: {{x}}</span></a>
@@ -124,14 +124,19 @@
             <div class="panel panel-default">
                    <div class="panel-heading"> <h4>{{right_title}}</h4></div>
                     <div class="panel-body">
+                    <span ng-show="cond">
                       <canvas id="base" class="chart-base" chart-type="type"
                             chart-data="data" chart-labels="labels" chart-legend="true">
 
                 </canvas> 
+                </span>
+                <span ng-hide="cond">Text Report
+                <div class="panel"> Coming soon</div>
+                </span>
                       <div class="clearfix"></div>
                       <div class="btn-group pull-left ">
-                          <button class=" btn btn-primary" ng-click="lol(cid,'p')" ng-disabled="cid<1" >Prev</button>
-                          <button class="btn btn-success" ng-click="lol(cid,'n')" ng-init="cid=1">Next</button>
+                          <button class=" btn btn-primary" ng-click=navigate("prev") ng-disabled= "counter<1">Prev</button>
+                          <button class="btn btn-success" ng-click= navigate("next") ng-disabled= "counter>total_question-2">Next</button>
                       </div>
                       <div class="btn-group pull-right btn-toggle"> 
                       <!--   <button class="btn btn-default" ng-click="toggleg('b',data)" data="{{cidvalue}}">Bar</button> -->
@@ -143,8 +148,9 @@
                      <span class="pull-right">*Use toggle to change between graph types</span>
                  </div><!--/panel-->
                  </div>
-  
-  
+                 <!--  -->
+              
+            
 
                  {%endraw%}
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

@@ -1,10 +1,15 @@
 var myApp= angular.module("ReportApp",["chart.js"]);
-myApp.controller("ReportController",["$http","$scope","$location","ChartJs",function($http,$scope,$location,ChartJs){
+myApp.controller("ReportController",["$http","$scope","$location","ChartJs","$timeout",function($http,$scope,$location,ChartJs,$timeout){
 
 	//ToDO
 	//Change Panel for Non Graphical Report
 	//
-	
+	function  text_report(data,labels) {
+        var resp={};
+        for (var i = 0; i < data.length; i++) {
+            
+        };
+    }
   // Helper function 2
     function cot (arr) {
        var a = [], b = [], prev;
@@ -48,7 +53,7 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
     			
     			
     			$scope.typed="Text";
-    			$scope.counter= 0;
+    			$scope.counter= 1;
     			// Destroy Chat
 				 $scope.$on('create', function (event, chart) {
 					        
@@ -182,8 +187,8 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
     					 else if ($scope.question_type=="multiple_choice"){
     					 	$scope.text= "";
                             $scope.cond=true;
-    					 	$scope.type="Bar";
-    					 	$scope.data=[count_options_total];
+    					 	$scope.type="Pie";
+    					 	
 
     					 	var label=[];
     					 	for (var i = 0; i < count_options.length; i++) {
@@ -199,17 +204,26 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
 
     					 	};
     					 	
-    					 	$scope.labels=label;
+    					 	
+                            $timeout(function() {
+                                            $scope.data=count_options_total;
+                                            $scope.labels=label;
+                                        },100);
 
     					 }
     					 else if ($scope.question_type=="ranking"){
                             $scope.text="";
                             $scope.cond=true;
-                            
+                            $scope.type="Bar";
+                            //Logic ... 1st Rank 3 Points . 2nd 2 points
+                            //get option_list
+                            //get raw_responses, then split , and se
+
+
                          }
     					 else if ($scope.question_type=="rating"){
     					 	$scope.text="";
-    					 	$scope.type="Bar";
+    					 	$scope.type="Pie";
                              $scope.cond=true;
     					 	
 
@@ -225,14 +239,18 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
     					 		
     					 		
 
-    					 	$scope.labels =["Below 5", "Between 5 and 7", "Above 7"];
-    					 	$scope.data= [[a,b,c]];
+    					 	
+    					 	
+                             $timeout(function() {
+                                            $scope.labels =["Below 5", "Between 5 and 7", "Above 7"];
+                                            $scope.data= [a,b,c];
+                                        },100);
     					 }
     					 else if ($scope.question_type=="yes_no" || $scope.question_type=="single_choice"){
     					 $scope.text=""; //Remove the text thing.
                           $scope.cond=true;
    				 		 $scope.type="Bar";
-    					 $scope.data=[count_options_total];
+    					 
 				 		 var labels=[];
     					
     					 		for (var i = 0; i < count_options.length; i++) {
@@ -240,14 +258,15 @@ myApp.controller("ReportController",["$http","$scope","$location","ChartJs",func
 
     					 	
     					 		};
-    					 		$scope.labels=labels;
+    					 		
+                                $timeout(function() {
+                                            $scope.data=[count_options_total];
+                                            $scope.labels=labels;
+                                        },100);
     					 		
     					 };
 
-    					// for (var i = 0; i < count[0].length; i++) {
-    						
-    						
-    					// };
+    					
 
 
     				};//navigate ends here!
